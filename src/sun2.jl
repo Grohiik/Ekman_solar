@@ -1,7 +1,6 @@
 using Plots
+using MTH229
 
-dag = 160
-#dag = 160
 
 eff = 0.15
 area = 30
@@ -25,41 +24,22 @@ I(n, t) = 1.1 * I_0 * 0.7^((1 / (abs(sin(alfa_s(n, t)))+sin(alfa_s(n, t)))/2)^0.
 I_p(n, t) = I(n, t) * (cos(teta_p - teta_s(n, t)) * cos(alfa_p - alfa_s(n, t)) + sin(alfa_s(n, t)) * sin(alfa_p) * (1 - cos(teta_p - teta_s(n, t))))
 
 
-P(n, t) = (*(((abs(I_p(n, t))+I_p(n, t))/2), eff, area))
+P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2), eff, area))
 
 
-s_date = 1
-e_date = 31
-s_time = 0
-e_time = 24
+s_date = 152
+e_date = 181
 step = 0.1
+
+
+x = 24*s_date:step:24*(e_date)+24
+x = filter(x->x%12!=0,x)
 
 kwh = 0
 
-for i in s_date:e_date
-    for j in s_time:step:e_time
-        #NEED good way to get number of light hours in a day or month. could count it but seems bumb
-        global kwh += P(i, j)
-    end
+for i in x
+    global kwh += i*P(i)
 end
 
-kwh /= (e_date-s_date)*((e_time-s_date)/step)
 
 print(kwh)
-
-P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2), eff, area))
-
-x = 24*dag+5:0.01:24*(dag+30)+20
-
-x = filter(x->x%12!=0,x)
-
-plot(x, P.(x), title = "Stockholm", label = "Juni")
-
-#P(x) = (*(((abs(I_p(dag, x))+I_p(dag, x))/2), eff, area))
-#plot!(P, 5, 18, label = "Januari")
-#plot!(test, 0, 24, label = "I/1000")
-
-xlabel!("tid[h]")
-ylabel!("P[W]")
-
-#savefig("effekt_utan_area_stockholm.svg")
