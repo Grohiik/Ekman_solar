@@ -1,5 +1,4 @@
 using Plots
-using MTH229
 
 
 eff = 0.15
@@ -20,6 +19,7 @@ teta_s(n, t) = pi + (omega(t) / abs(omega(t))) * acos((sin(lat) * sin(alfa_s(n, 
 
 I_0 = 1360
 I(n, t) = 1.1 * I_0 * 0.7^((1 / (abs(sin(alfa_s(n, t)))+sin(alfa_s(n, t)))/2)^0.678)  # underlig abs medelvärde för att få 0 om negativt värde
+# Detta ser till att vi får reella talet 0 när solen inte lyser på våran platts på jorden.
 
 I_p(n, t) = I(n, t) * (cos(teta_p - teta_s(n, t)) * cos(alfa_p - alfa_s(n, t)) + sin(alfa_s(n, t)) * sin(alfa_p) * (1 - cos(teta_p - teta_s(n, t))))
 
@@ -34,6 +34,8 @@ step = 0.1
 
 x = 24*s_date:step:24*(e_date)+24
 x = filter(x->x%12!=0,x)
+# samma som i sun, men nu behövs det faktiskt eftersom vi kollar på ett större spann och behöver mer presicion. 
+# vi kan inte häller använda plot funktionen eftersom vi integrerar nu.
 
 kwh = 0
 

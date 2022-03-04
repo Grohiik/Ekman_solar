@@ -43,3 +43,4 @@ function kwt_alfa(degalfa_p)
 end
 
 plot(kwt_alfa, 0, 180)
+# plot kwh as a function of alfa_p. We can later change this to output the biggest alfa_p with relative ease.

@@ -21,6 +21,7 @@ teta_s(n, t) = pi + (omega(t) / abs(omega(t))) * acos((sin(lat) * sin(alfa_s(n, 
 
 I_0 = 1360
 I(n, t) = 1.1 * I_0 * 0.7^((1 / (abs(sin(alfa_s(n, t)))+sin(alfa_s(n, t)))/2)^0.678)  # underlig abs medelvärde för att få 0 om negativt värde
+# Detta ser till att vi får reella talet 0 när solen inte lyser på våran platts på jorden.
 
 I_p(n, t) = I(n, t) * (cos(teta_p - teta_s(n, t)) * cos(alfa_p - alfa_s(n, t)) + sin(alfa_s(n, t)) * sin(alfa_p) * (1 - cos(teta_p - teta_s(n, t))))
 
@@ -29,8 +30,10 @@ P(x) = (*(((abs(I_p(dag, x))+I_p(dag, x))/2), eff, area))
 
 
 x = 5:0.01:18
+# Gennerera en lista mellan timmarna vi vill kolla på.
 
 x = filter(x->x%12!=0,x)
+# filtrera bort allt some är dividerbart med 12 så att vi inte dividerar med 0
 
 plot(x, P.(x), title = "Stockholm", label = "Juni")
 
