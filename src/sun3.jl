@@ -23,7 +23,9 @@ function kwt_alfa(degalfa_p)
     I_p(n, t) = I(n, t) * (cos(teta_p - teta_s(n, t)) * cos(alfa_p - alfa_s(n, t)) + sin(alfa_s(n, t)) * sin(alfa_p) * (1 - cos(teta_p - teta_s(n, t))))
 
 
-    P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2), eff, area))
+    weather_loss = 1-(1821/(365*12))
+
+    P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2), Weather_loss, eff, area))
 
     s_date = 152
     e_date = 181
