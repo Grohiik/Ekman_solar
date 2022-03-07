@@ -23,8 +23,9 @@ I(n, t) = 1.1 * I_0 * 0.7^((1 / (abs(sin(alfa_s(n, t)))+sin(alfa_s(n, t)))/2)^0.
 
 I_p(n, t) = I(n, t) * (cos(teta_p - teta_s(n, t)) * cos(alfa_p - alfa_s(n, t)) + sin(alfa_s(n, t)) * sin(alfa_p) * (1 - cos(teta_p - teta_s(n, t))))
 
+weather_loss = 1-(1821/(365*12))
 
-P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2), eff, area))
+P(x) = (*(((abs(I_p(floor(x/24), x))+I_p(floor(x/24), x))/2),weather_loss , eff, area))
 
 
 s_date = 152
